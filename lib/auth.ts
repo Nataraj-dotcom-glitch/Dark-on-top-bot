@@ -22,7 +22,6 @@ export const authOptions: AuthOptions = {
     DiscordProvider({
   id: "discord",
   name: "Discord",
-  type: "oauth",
 
   clientId: process.env.DISCORD_CLIENT_ID!,
   clientSecret: process.env.DISCORD_CLIENT_SECRET!,
