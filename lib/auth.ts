@@ -20,32 +20,14 @@ import type { AuthOptions } from "next-auth";
 export const authOptions: AuthOptions = {
   providers: [
     DiscordProvider({
-  id: "discord",
-  name: "Discord",
-
-  clientId: process.env.DISCORD_CLIENT_ID!,
-  clientSecret: process.env.DISCORD_CLIENT_SECRET!,
-
-  authorization: {
-    url: "https://discord.com/api/oauth2/authorize",
-    params: {
-      scope: "identify guilds",
-    },
-  },
-
-  token: "https://discord.com/api/oauth2/token",
-  userinfo: "https://discord.com/api/users/@me",
-
-  profile(profile) {
-    return {
-      id: profile.id,
-      name: profile.username,
-      image: profile.avatar
-        ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
-        : null,
-    };
-  },
-}),
+      clientId: process.env.DISCORD_CLIENT_ID!,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope: "identify guilds",
+        },
+      },
+    }),
   ],
 
   secret: process.env.NEXTAUTH_SECRET,
@@ -54,15 +36,11 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
 
-  useSecureCookies:
-    process.env.NODE_ENV === "production",
-
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token;
       }
-
       return token;
     },
 
@@ -74,7 +52,6 @@ export const authOptions: AuthOptions = {
         // @ts-ignore
         session.accessToken = token.accessToken;
       }
-
       return session;
     },
   },
