@@ -20,15 +20,15 @@ import type { AuthOptions } from "next-auth";
 export const authOptions: AuthOptions = {
   providers: [
     DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID!,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          scope: "identify guilds",
-          prompt: "consent",
-        },
-      },
-    }),
+  clientId: process.env.DISCORD_CLIENT_ID!,
+  clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+  checks: ["state"],
+  authorization: {
+    params: {
+      scope: "identify guilds",
+    },
+  },
+}),
   ],
 
   secret: process.env.NEXTAUTH_SECRET,
