@@ -20,15 +20,14 @@ import type { AuthOptions } from "next-auth";
 export const authOptions: AuthOptions = {
   providers: [
     DiscordProvider({
-  clientId: process.env.DISCORD_CLIENT_ID!,
-  clientSecret: process.env.DISCORD_CLIENT_SECRET!,
-
-  authorization: {
-    params: {
-      scope: "identify guilds",
-    },
-  },
-}),
+      clientId: process.env.DISCORD_CLIENT_ID!,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope: "identify guilds",
+        },
+      },
+    }),
   ],
 
   secret: process.env.NEXTAUTH_SECRET,
@@ -36,6 +35,8 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
   },
+
+  debug: process.env.NODE_ENV === "development",
 
   callbacks: {
     async jwt({ token, account }) {
